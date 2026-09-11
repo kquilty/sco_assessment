@@ -6,3 +6,54 @@ generator client {
 datasource db {
   provider = "mysql"
 }
+
+model Patient {
+  id              Int             @id @default(autoincrement())
+  email           String          @unique
+  name            String
+  created_at      DateTime        @default(now())
+  updated_at      DateTime        @updatedAt
+  treatment_plans TreatmentPlan[]
+}
+
+model TreatmentPlan {
+  id                 Int                @id @default(autoincrement())
+  plan_name          String
+  created_at         DateTime           @default(now())
+  patient_id         Int
+  patient            Patient            @relation(fields: [patient_id], references: [id])
+  treatment_sessions TreatmentSession[]
+
+  @@index([patient_id], map: "TreatmentPlan_patient_id_fkey")
+}
+
+enum SessionStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+model TreatmentSession {
+  id                Int           @id @default(autoincrement())
+  session_name      String
+  created_at        DateTime      @default(now())
+  treatment_plan_id Int
+  treatmentPlan     TreatmentPlan @relation(fields: [treatment_plan_id], references: [id])
+
+  // When the treatment actually happened (entered by the )
+  treated_at        DateTime
+
+  // Just a string for this exercise. In a real system this would be a FK to a clinicians/users table.
+  clinician_id      String        @db.VarChar(64)
+
+  status            SessionStatus
+
+  // Clinician-entered device settings (JSON because the data will vary)
+  parameters        Json
+
+  notes             String?       @db.Text
+
+  // (since history query will be "sessions for this plan, newest first")
+  @@index([treatment_plan_id, treated_at])
+  @@map("treatment_sessions")
+}
