@@ -38,11 +38,4 @@ export class AppController {
     ) {
         return this.appService.createTreatmentSession(id, createTreatmentSessionDto);
     }
-    // @Post('/patients/:id/sessions')
-    // async createPatientSession(
-    //     @Param('id', ParseIntPipe) id: number,
-    //     @Body() createPatientSessionDto: CreatePatientSession
-    // ) {
-    //     return this.appService.createPatientSession(id, createPatientSessionDto);
-    // }
 }

@@ -68,7 +68,7 @@ export interface PrismaClientConstructor {
    * @example
    * ```
    * const prisma = new PrismaClient({
-   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   *   adapter: new PrismaPg({ connectionString: process.env.DB_URL })
    * })
    * // Fetch zero or more Patients
    * const patients = await prisma.patient.findMany()
@@ -92,7 +92,7 @@ export interface PrismaClientConstructor {
  * @example
  * ```
  * const prisma = new PrismaClient({
- *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ *   adapter: new PrismaPg({ connectionString: process.env.DB_URL })
  * })
  * // Fetch zero or more Patients
  * const patients = await prisma.patient.findMany()

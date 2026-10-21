@@ -1,20 +1,12 @@
 import { Module } from '@nestjs/common';
-import { createObserveModule } from '@nestjs/observe';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaService } from './prisma.service';
-
-export const { ObserveModule, ObserveInstrument } = createObserveModule();
+import { ConfigModule } from '@nestjs/config'; 
 
 @Module({
     imports: [
-        // Distributed tracing, auto-correlated logs, request/job metrics, error
-        // telemetry, alarms, and more — out of the box. Sign up at https://observe.nestjs.com
-        ObserveModule.forRoot({
-            appKey: 'YOUR_APP_KEY',
-            appSecret: 'YOUR_APP_SECRET',
-            serviceId: 'backend',
-        }),
+        ConfigModule.forRoot({ isGlobal: true }), // "Allow every other module to access the config without needing to import it themselves"
     ],
     controllers: [AppController],
     providers: [AppService, PrismaService],
