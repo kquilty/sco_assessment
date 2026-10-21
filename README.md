@@ -27,7 +27,8 @@ The generated Prisma client is committed, so `prisma generate` is only needed af
 
 ## Security and risk
 
-There is no authentication or authorization. Because this is patient health data, every endpoint except the `GET /` health check should require a logged-in clinician, with a check that they can access that patient (IDs are sequential, so they're easy to guess). `clinician_id` should come from the authenticated user rather than the request body, and the hard-coded credentials and open CORS are for local development only.
+- There is no authentication or authorization. Because this is patient health data, every endpoint except the `GET /` health check should require a logged-in clinician, with a check that they can access that patient (IDs are sequential, so they're easy to guess). `clinician_id` should come from the authenticated user rather than the request body, and the hard-coded credentials and open CORS are for local development only.
+- allowPublicKeyRetrieval is enabled for local development; production should connect over TLS instead.
 
 ## Decisions where reasonable engineers might differ
 
